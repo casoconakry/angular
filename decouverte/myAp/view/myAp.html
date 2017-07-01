@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="monAppli">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.js"></script>
+    <script>
+
+        function surveiller($scope)
+        {
+            $scope.watch('username',alerter());
+        }
+        function alerter() {
+            alert("username modifié");
+        }
+        function MonControleur($scope) {
+            $scope.user= {name:'Camara', lastName:' Caso Camara'};
+            $scope.test = {name : "bonjourrrrrrrrrrrrrrrr"};
+            $scope.username = 'Nas Caso Camara';
+            $scope.test1 = ' no bindin';
+            $scope.liste = [
+                {'name':'fubu','valeur':'0'},
+                {'name':'wada','valeur':'1'},
+                {'name':'juliete','valeur':'10'},
+                {'name':'caso','valeur':'500'}
+           ] ;
+        }
+
+        angular.module('monAppli',[]).
+        controller('MonControleur',MonControleur)
+        .controller('surveil',surveiller);
+    </script>
+
+</head>
+
+
+<body ng-controller="MonControleur">
+    <h1> Ma premiere Appli Angular </h1>
+    <p> Bonjour {{user.name}} {{user.lastName}}</p>
+     <p ng-bind="username"></p>
+
+    <h1> Se Connecter </h1>
+    <form>
+       <label for="login"> Login </label> <input  type="text" id="login" ng-model="username"/>
+       <label for="password"> Password</label> <input id="password" type="password" ng-model="password"/>
+       <input type="submit" value="validez"/>
+    </form>
+    <p> <input id="passwordd" type="text" ng-bind="::test1" > </p>
+    <p> <input id="passworddd" type="text" ng-bind="::test1"> </p>
+
+   <select ng-model="couleur">
+       <option value="">Aucun</option>
+       <option value="red">Rouge</option>
+       <option value="blue">Bleu</option>
+   </select>
+
+    <p ng-style="{'color':couleur}">
+         Texte affiché en {{couleur}}
+    </p>
+
+    <select ng-model="filtre">
+        <option value="name" selected>Nom</option>
+        <option value="valeur">valeur</option>
+    </select>
+    <input type="number" ng-model="limit" aria-valuemax="{{liste.size}}">
+
+    <ul>
+        <li ng-repeat="l in liste |orderBy:filtre |limitTo : limit">{{l.name}}</li>
+    </ul>
+</body>
+
+
+</html>
